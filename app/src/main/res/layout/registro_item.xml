@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivFotografia"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary"
+        android:layout_below="@+id/ivFotografia"
+        android:layout_alignLeft="@+id/ivFotografia"
+        android:layout_marginTop="8dp"
+        android:id="@+id/view" />
+
+    <TextView
+        android:id="@+id/tvData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="Data : "
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvKm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Km : "
+        android:textSize="18sp"
+        android:layout_above="@+id/view"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvLitros"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvKm"
+        android:layout_alignBottom="@+id/tvKm"
+        android:layout_centerHorizontal="true"
+        android:text="Litros : "
+        android:textSize="18sp" />
+
+</RelativeLayout>
