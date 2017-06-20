@@ -22,7 +22,7 @@ public class Registro implements Serializable{
     private String posto;
     private static double autonomiaAtual = 0.0;
     private static double totalLitros = 0.0;
-    private static double totalKm = 0.0;
+
 
     public Registro(double kmAtual, double lAbastecidos, String dataAbastecimento, String posto){
         this.setKmAtual(kmAtual);
@@ -31,39 +31,50 @@ public class Registro implements Serializable{
         this.setPosto(posto);
     }
 
-    public static ArrayList<Registro> getListaRegistros(Context cont) {
+    public static ArrayList<Registro> getListaRegistros() {
+        return listaRegistros;
+    }
+
+    public static void carregaLista(Context cont) {
         BancoDadosHelper bdHelper = new BancoDadosHelper( cont );
         SQLiteDatabase db = bdHelper.getReadableDatabase();
-
+        totalLitros = 0;
         String[] projecao = {
                 "km",
                 "litros",
                 "data",
                 "posto"};
 
+
         String order = "id ASC";
-
-        Cursor c = db.query(
-                "minha_tabela",
-                projecao,
-                null,
-                null,
-                null,
-                null,
-                order
-        );
-
-        if(c.moveToFirst()){
-            do{
-                Toast.makeText(cont, "EU ESTIVE AQUI", Toast.LENGTH_LONG).show();
-                Registro novoRegistro = new Registro(c.getDouble(0),c.getDouble(1),c.getString(2),c.getString(3));
-                listaRegistros.add(novoRegistro);
-            } while (c.moveToNext());
-        }else{
+        try{
+            Cursor c = db.query(
+                    BancoDadosHelper.TABELA,
+                    projecao,
+                    null,
+                    null,
+                    null,
+                    null,
+                    order
+            );
+            if(c!=null){
+                if(c.moveToFirst()){
+                    do{
+                        Registro novoRegistro = new Registro(c.getDouble(0),c.getDouble(1),c.getString(2),c.getString(3));
+                        listaRegistros.add(novoRegistro);
+                        totalLitros += c.getDouble(1);
+                    }while (c.moveToNext());
+                }else{
+                    Toast.makeText(cont, "Lista Vazia", Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(cont, "Lista Vazia", Toast.LENGTH_LONG).show();
+            }
+        }catch (Exception erro){
             Toast.makeText(cont, "Lista Vazia", Toast.LENGTH_LONG).show();
+            return;
         }
 
-        return listaRegistros;
     }
 
     public static void setListaRegistros(ArrayList<Registro> listaRegistros) {
@@ -84,14 +95,6 @@ public class Registro implements Serializable{
 
     public static void setTotalLitros(double totalLitros) {
         Registro.totalLitros = totalLitros;
-    }
-
-    public static double getTotalKm() {
-        return totalKm;
-    }
-
-    public static void setTotalKm(double totalKm) {
-        Registro.totalKm = totalKm;
     }
 
     public double getKmAtual() {

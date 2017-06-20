@@ -23,7 +23,7 @@ public class VisualizarListaActivity extends AppCompatActivity {
         RecyclerView rvRegistros = (RecyclerView)findViewById(R.id.rvRegistros);
         rvRegistros.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
         registroAdapter = new RegistroAdapter();
-        registroAdapter.setListaRegistros(Registro.getListaRegistros(VisualizarListaActivity.this));
+        registroAdapter.setListaRegistros(Registro.getListaRegistros());
         rvRegistros.setAdapter(registroAdapter);
     }
 }
